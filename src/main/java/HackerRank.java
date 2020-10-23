@@ -1,21 +1,115 @@
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+
+import static org.apache.commons.lang3.ArrayUtils.indexOf;
 
 public class HackerRank {
     public static void main(String[] args) {
 
     }
+    static long arrayManipulation(int n, int[][] queries) {
+        if (n < 3 || n > 10e7) {
+            return -1;
+        }
+        long max = 0;
+
+        Map<Integer,Long> map=new HashMap<>();
+        for (int[] row : queries) {
+            for (int j = row[0] - 1; j < row[1]; j++) {
+                if (map.containsKey(j)) {
+                    map.replace(j, map.get(j) + row[2]);
+                } else {
+                    map.put(j, (long) row[2]);
+                }
+            }
+        }
+
+        for (Integer key: map.keySet()){
+            max=Math.max(max,map.get(key));
+        }
+        return max;
+    }
+
+
+    static int minimumSwaps(int[] arr) {
+        if (arr.length < 1 || arr.length > 10e5) {
+            return -1;
+        }
+        int swaps = 0;
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i] != i + 1) {
+                int index = indexOf(arr,i+1);
+                int temp = arr[i];
+                arr[i] = arr[index];
+                arr[index] = temp;
+                swaps++;
+            }
+        }
+        return swaps;
+    }
+
+    static void minimumBribes(int[] q) {
+        if (q.length < 1 || q.length > 10e5) {
+            return;
+        }
+        int bribes = 0;
+        for (int i = 0; i < q.length; i++) {
+            if ((q[i] - (i + 1)) > 2) {
+                System.out.println("Too chaotic");
+                return;
+            }
+            for (int j = Math.max(0, q[i] - 2); j < i; j++) {
+                if (q[j] > q[i]) {
+                    bribes++;
+                }
+            }
+        }
+        System.out.println(bribes);
+    }
+
+    static int[] rotLeft(int[] a, int d) {
+        if (a.length < 1 || a.length > 10e5) {
+            return null;
+        }
+        if (d < 1 || d > a.length) {
+            return null;
+        }
+        int[] result = new int[a.length];
+        System.arraycopy(a, d, result, 0, a.length - d);
+        System.arraycopy(a, 0, result, a.length - d, d);
+        return result;
+    }
+
+    static int hourglassSum(int[][] arr) {
+        int max = -63;
+        int sumU, sumD;
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 4; j++) {
+                sumU = arr[i][j] + arr[i][j + 1] + arr[i][j + 2];
+                sumD = arr[i + 2][j] + arr[i + 2][j + 1] + arr[i + 2][j + 2];
+                max = Math.max(max, sumU + arr[i + 1][j + 1] + sumD);
+            }
+        }
+        return max;
+    }
+
+
+    //Warm up
+    //////////////////////////////////////////////////////////////////
     static long repeatedString(String s, long n) {
-        if(s.length()<1 || s.length()>100){
+        if (s.length() < 1 || s.length() > 100) {
             return -1;
         }
-        if(n<1 || n>10e12){
+        if (n < 1 || n > 10e12) {
             return -1;
         }
-        long ss= s.chars().filter(ch->ch==s.charAt(0)).count();
-        return n/s.length()*ss+s.substring(0, (int) (n%s.length())).chars().filter(ch->ch==s.charAt(0)).count();
+        long noOfFirstCharInS = s.chars().filter(ch -> ch == 'a').count();
+        long noOfCharInN = n / s.length() * noOfFirstCharInS;
+        int suffixLength = (int) (n % s.length());
+        String suffix = s.substring(0, suffixLength);
+        long noOfCharInSuffix = suffix.chars().filter(ch -> ch == 'a').count();
+        return noOfCharInN + noOfCharInSuffix;
     }
 
     static int jumpingOnClouds(int[] c) {

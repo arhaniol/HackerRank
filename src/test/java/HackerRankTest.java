@@ -86,8 +86,49 @@ class HackerRankTest {
 
     @Test
     void should_repeatedString_return_correct_result() {
-        assertEquals(7,HackerRank.repeatedString("aba",10));
-        assertEquals(1000000000000L,HackerRank.repeatedString("a",1000000000000L));
-        assertEquals(4,HackerRank.repeatedString("abaaaaaaaaaa",5));
+        assertEquals(7, HackerRank.repeatedString("aba", 10));
+        assertEquals(1000000000000L, HackerRank.repeatedString("a", 1000000000000L));
+        assertEquals(4, HackerRank.repeatedString("abaaaaaaaaaa", 5));
+        assertEquals(3, HackerRank.repeatedString("abb", 9));
+        assertEquals(3, HackerRank.repeatedString("abb", 8));
+        assertEquals(3, HackerRank.repeatedString("abb", 7));
+        assertEquals(1, HackerRank.repeatedString("abbccc", 1));
+        assertEquals(1, HackerRank.repeatedString("abbccc", 2));
+        assertEquals(1, HackerRank.repeatedString("abbccc", 3));
+        assertEquals(1, HackerRank.repeatedString("abbccc", 6));
+
+    }
+
+    @Test
+    void should_hourglassSum_return_correct_result() {
+        int[][] arr = new int[][]{{1, 1, 1, 0, 0, 0}, {0, 1, 0, 0, 0, 0}, {1, 1, 1, 0, 0, 0}, {0, 0, 2, 4, 4, 0}, {0, 0, 0, 2, 0, 0}, {0, 0, 1, 2, 4, 0}};
+        assertEquals(19, HackerRank.hourglassSum(arr));
+    }
+
+    @Test
+    void should_rotLeft_return_correct_result() {
+        assertArrayEquals(new int[]{5, 1, 2, 3, 4}, HackerRank.rotLeft(new int[]{1, 2, 3, 4, 5}, 4));
+    }
+
+    @Test
+    void should_minimumBribes_return_correct_result() {
+        System.out.print("3 ? => ");
+        HackerRank.minimumBribes(new int[]{2, 1, 5, 3, 4});
+        System.out.print("Too chaotic ? => ");
+        HackerRank.minimumBribes(new int[]{2, 5, 1, 3, 4});
+        System.out.print("Too chaotic ? => ");
+        HackerRank.minimumBribes(new int[]{5, 1, 2, 3, 7, 8, 6, 4});
+        System.out.print("7 ? => ");
+        HackerRank.minimumBribes(new int[]{1, 2, 5, 3, 7, 8, 6, 4});
+    }
+
+    @Test
+    void should_minimumSwaps_return_correct_result() {
+        assertEquals(5,HackerRank.minimumSwaps(new int[]{7, 1, 3, 2, 4, 5, 6}));
+    }
+
+    @Test
+    void should_arrayManipulation_return_correct_result() {
+        assertEquals(200,HackerRank.arrayManipulation(5,new int[][]{{1, 2, 100},{2, 5, 100},{3, 4, 100}}));
     }
 }
