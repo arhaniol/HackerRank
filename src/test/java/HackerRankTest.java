@@ -131,4 +131,32 @@ class HackerRankTest {
     void should_arrayManipulation_return_correct_result() {
         assertEquals(200,HackerRank.arrayManipulation(5,new int[][]{{1, 2, 100},{2, 5, 100},{3, 4, 100}}));
     }
+
+    @Test
+    void should_checkMagazine_return_correct_result() {
+        String s="give me one grand today night";
+        String n="give one grand today";
+        String[] magazine=s.split(" ");
+        String[] note=n.split(" ");
+        HackerRank.checkMagazine(magazine,note);
+
+        String s1="two times three is not four";
+        String n1="two times two is four";
+        String[] magazine1=s1.split(" ");
+        String[] note1=n1.split(" ");
+        HackerRank.checkMagazine(magazine1,note1);
+
+        String s2="ive got a lovely bunch of coconuts";
+        String n2="ive got some coconuts";
+        String[] magazine2=s2.split(" ");
+        String[] note2=n2.split(" ");
+        HackerRank.checkMagazine(magazine2,note2);
+    }
+
+    @Test
+    void should_twoStrings_return_correct_result() {
+        assertEquals("YES",HackerRank.twoStrings("hello","world"));
+        assertEquals("NO",HackerRank.twoStrings("hi","world"));
+        assertEquals("YES",HackerRank.twoStrings("herak","world"));
+    }
 }

@@ -1,6 +1,7 @@
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.stream.Collectors;
 
 import static org.apache.commons.lang3.ArrayUtils.indexOf;
 
@@ -8,13 +9,49 @@ public class HackerRank {
     public static void main(String[] args) {
 
     }
+
+    static String twoStrings(String s1, String s2) {
+        String result = "NO";
+        Set<Character> set1 = s1.chars().mapToObj(e -> (char) e).collect(Collectors.toSet());
+        Set<Character> set2 = s2.chars().mapToObj(e -> (char) e).collect(Collectors.toSet());
+
+        for (Character ch : set2) {
+            if (set1.contains(ch)) {
+                result = "YES";
+                break;
+            }
+        }
+
+        return result;
+    }
+
+    static void checkMagazine(String[] magazine, String[] note) {
+        String result = "Yes";
+
+        if (note.length > magazine.length) {
+            result = "No";
+        }
+
+        List<String> list = new ArrayList<>(Arrays.asList(magazine));
+        for (String s : note) {
+            if (list.remove(s)) {
+            } else {
+                result = "No";
+                break;
+            }
+        }
+        System.out.println(result);
+    }
+
+    //Arrays
+    /////////////////////////////////////////////////////////////////
     static long arrayManipulation(int n, int[][] queries) {
         if (n < 3 || n > 10e7) {
             return -1;
         }
         long max = 0;
 
-        Map<Integer,Long> map=new HashMap<>();
+        Map<Integer, Long> map = new HashMap<>();
         for (int[] row : queries) {
             for (int j = row[0] - 1; j < row[1]; j++) {
                 if (map.containsKey(j)) {
@@ -25,8 +62,8 @@ public class HackerRank {
             }
         }
 
-        for (Integer key: map.keySet()){
-            max=Math.max(max,map.get(key));
+        for (Integer key : map.keySet()) {
+            max = Math.max(max, map.get(key));
         }
         return max;
     }
@@ -39,7 +76,7 @@ public class HackerRank {
         int swaps = 0;
         for (int i = 0; i < arr.length; i++) {
             if (arr[i] != i + 1) {
-                int index = indexOf(arr,i+1);
+                int index = indexOf(arr, i + 1);
                 int temp = arr[i];
                 arr[i] = arr[index];
                 arr[index] = temp;
