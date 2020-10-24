@@ -1,5 +1,9 @@
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class HackerRankTest {
@@ -158,5 +162,13 @@ class HackerRankTest {
         assertEquals("YES",HackerRank.twoStrings("hello","world"));
         assertEquals("NO",HackerRank.twoStrings("hi","world"));
         assertEquals("YES",HackerRank.twoStrings("herak","world"));
+    }
+
+    @Test
+    void should_countTriplets_return_correct_result() {
+        assertEquals(2,HackerRank.countTriplets(Arrays.asList(1L, 2L, 2L, 4L),2));
+        assertEquals(6,HackerRank.countTriplets(Arrays.asList(1L, 3L, 9L, 9L, 27L, 81L),3));
+        assertEquals(4,HackerRank.countTriplets(Arrays.asList(1L, 5L, 5L, 25L, 125L),5));
+        assertEquals(3,HackerRank.countTriplets(Arrays.asList(1L, 1L, 1L, 1L),1));
     }
 }

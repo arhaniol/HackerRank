@@ -9,6 +9,41 @@ public class HackerRank {
     public static void main(String[] args) {
 
     }
+//dokończyć
+    static long countTriplets(List<Long> arr, long r) {
+        long result = 0;
+
+        Collections.sort(arr);
+        for (int i = 0; i < arr.size() - 2; i++) {
+            long third = 1;
+            long doublet = 1;
+            for (int j = i + 1; j < arr.size(); j++) {
+                if (arr.get(i) * r * third == arr.get(j)) {
+                    if (j + 1 < arr.size() && arr.get(j + 1).equals(arr.get(j))) {
+                        doublet++;
+                    } else {
+                        if (third == 1) {
+                            third = r;
+                        } else {
+                            result += doublet;
+                            break;
+                        }
+                    }
+                } else if (arr.get(i) * r * third < arr.get(j)) {
+                    if (doublet > 1) {
+                        if (third == 1) {
+                            third = r;
+                        } else {
+                            result += doublet;
+                        }
+                    }
+                    break;
+                }
+            }
+        }
+
+        return result;
+    }
 
     static String twoStrings(String s1, String s2) {
         String result = "NO";
