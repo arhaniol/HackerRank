@@ -1,8 +1,14 @@
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -128,47 +134,72 @@ class HackerRankTest {
 
     @Test
     void should_minimumSwaps_return_correct_result() {
-        assertEquals(5,HackerRank.minimumSwaps(new int[]{7, 1, 3, 2, 4, 5, 6}));
+        assertEquals(5, HackerRank.minimumSwaps(new int[]{7, 1, 3, 2, 4, 5, 6}));
     }
 
     @Test
     void should_arrayManipulation_return_correct_result() {
-        assertEquals(200,HackerRank.arrayManipulation(5,new int[][]{{1, 2, 100},{2, 5, 100},{3, 4, 100}}));
+        assertEquals(200, HackerRank.arrayManipulation(5, new int[][]{{1, 2, 100}, {2, 5, 100}, {3, 4, 100}}));
     }
 
     @Test
     void should_checkMagazine_return_correct_result() {
-        String s="give me one grand today night";
-        String n="give one grand today";
-        String[] magazine=s.split(" ");
-        String[] note=n.split(" ");
-        HackerRank.checkMagazine(magazine,note);
+        String s = "give me one grand today night";
+        String n = "give one grand today";
+        String[] magazine = s.split(" ");
+        String[] note = n.split(" ");
+        HackerRank.checkMagazine(magazine, note);
 
-        String s1="two times three is not four";
-        String n1="two times two is four";
-        String[] magazine1=s1.split(" ");
-        String[] note1=n1.split(" ");
-        HackerRank.checkMagazine(magazine1,note1);
+        String s1 = "two times three is not four";
+        String n1 = "two times two is four";
+        String[] magazine1 = s1.split(" ");
+        String[] note1 = n1.split(" ");
+        HackerRank.checkMagazine(magazine1, note1);
 
-        String s2="ive got a lovely bunch of coconuts";
-        String n2="ive got some coconuts";
-        String[] magazine2=s2.split(" ");
-        String[] note2=n2.split(" ");
-        HackerRank.checkMagazine(magazine2,note2);
+        String s2 = "ive got a lovely bunch of coconuts";
+        String n2 = "ive got some coconuts";
+        String[] magazine2 = s2.split(" ");
+        String[] note2 = n2.split(" ");
+        HackerRank.checkMagazine(magazine2, note2);
     }
 
     @Test
     void should_twoStrings_return_correct_result() {
-        assertEquals("YES",HackerRank.twoStrings("hello","world"));
-        assertEquals("NO",HackerRank.twoStrings("hi","world"));
-        assertEquals("YES",HackerRank.twoStrings("herak","world"));
+        assertEquals("YES", HackerRank.twoStrings("hello", "world"));
+        assertEquals("NO", HackerRank.twoStrings("hi", "world"));
+        assertEquals("YES", HackerRank.twoStrings("herak", "world"));
     }
 
     @Test
     void should_countTriplets_return_correct_result() {
-        assertEquals(2,HackerRank.countTriplets(Arrays.asList(1L, 2L, 2L, 4L),2));
-        assertEquals(6,HackerRank.countTriplets(Arrays.asList(1L, 3L, 9L, 9L, 27L, 81L),3));
-        assertEquals(4,HackerRank.countTriplets(Arrays.asList(1L, 5L, 5L, 25L, 125L),5));
-        assertEquals(3,HackerRank.countTriplets(Arrays.asList(1L, 1L, 1L, 1L),1));
+        assertEquals(2, HackerRank.countTriplets(Arrays.asList(1L, 2L, 2L, 4L), 2));
+        assertEquals(6, HackerRank.countTriplets(Arrays.asList(1L, 3L, 9L, 9L, 27L, 81L), 3));
+        assertEquals(4, HackerRank.countTriplets(Arrays.asList(1L, 5L, 5L, 25L, 125L), 5));
+        assertEquals(4, HackerRank.countTriplets(Arrays.asList(1L, 1L, 1L, 1L), 1));
+        assertEquals(10, HackerRank.countTriplets(Arrays.asList(1L, 1L, 1L, 1L, 1L), 1));
+        assertEquals(1, HackerRank.countTriplets(Arrays.asList(1L, 1L, 1L), 1));
+        assertEquals(8, HackerRank.countTriplets(Arrays.asList(1L, 1L, 3L, 3L, 9L, 9L), 3));
+
+        assertEquals(2325652489L, HackerRank.countTriplets(tablica(), 3));
+    }
+
+    @Test
+    void should_sherlockAndAnagrams_return_correct_result() {
+        assertEquals(4, HackerRank.sherlockAndAnagrams("abba"));
+        assertEquals(0, HackerRank.sherlockAndAnagrams("abcd"));
+        assertEquals(3, HackerRank.sherlockAndAnagrams("ifailuhkqq"));
+        assertEquals(10, HackerRank.sherlockAndAnagrams("kkkk"));
+        assertEquals(5, HackerRank.sherlockAndAnagrams("cdcd"));
+    }
+
+    private List<Long> tablica() {
+        String arr = null;
+        try {
+            arr = new String(Files.readAllBytes(Paths.get("C:\\Users\\michal.musial\\IdeaProjects\\HackerRank\\src\\test\\test.txt")));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return Stream.of(arr.split(" ")).map(Long::parseLong).collect(Collectors.toList());
     }
 }

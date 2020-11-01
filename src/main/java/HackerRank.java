@@ -9,41 +9,88 @@ public class HackerRank {
     public static void main(String[] args) {
 
     }
-//dokończyć
+
     static long countTriplets(List<Long> arr, long r) {
         long result = 0;
 
-        Collections.sort(arr);
-        for (int i = 0; i < arr.size() - 2; i++) {
-            long third = 1;
-            long doublet = 1;
-            for (int j = i + 1; j < arr.size(); j++) {
-                if (arr.get(i) * r * third == arr.get(j)) {
-                    if (j + 1 < arr.size() && arr.get(j + 1).equals(arr.get(j))) {
-                        doublet++;
-                    } else {
-                        if (third == 1) {
-                            third = r;
-                        } else {
-                            result += doublet;
-                            break;
-                        }
+        Map<Long, Long> map = new HashMap<>();
+
+        for (Long l : arr) {
+            if (map.containsKey(l)) {
+                map.replace(l, map.get(l) + 1L);
+            } else {
+                map.put(l, 1L);
+            }
+        }
+        if (r == 1) {
+            for (Long l : map.values()) {
+                if ((l) >= 3) {
+                    result += factorial(l, 3);
+                }
+            }
+        } else {
+//            Collections.sort(arr);
+//            long previous = 0;
+//            for (int i = 0; i < arr.size() - 2; i++) {
+//                long l = arr.get(i);
+//                if (l == previous) {
+//                    continue;
+//                } else {
+//                    previous = l;
+//                }
+            for (Long l : map.keySet()) {
+                long second = l * r;
+                if (map.containsKey(second)) {
+                    long third = second * r;
+                    if (map.containsKey(third)) {
+                        long f = map.get(l);
+                        long s = map.get(second);
+                        long t = map.get(third);
+                        result += f * s * t;
                     }
-                } else if (arr.get(i) * r * third < arr.get(j)) {
-                    if (doublet > 1) {
-                        if (third == 1) {
-                            third = r;
-                        } else {
-                            result += doublet;
-                        }
-                    }
-                    break;
                 }
             }
         }
 
         return result;
     }
+
+    private static long factorial(long n, int k) {
+        long result = 1;
+        if (n == k) {
+            return result;
+        }
+        for (long i = n - k + 1; i <= n; i++) {
+            result *= i;
+        }
+        long denominator = 1;
+        for (int i = 2; i <= k; i++) {
+            denominator *= i;
+        }
+        return result / denominator;
+    }
+
+    static int sherlockAndAnagrams(String s) {
+        int result = 0;
+        for (int len = 1; len <= s.length() - 1; len++) {
+            for (int i = 0; i <= s.length() - len; i++) {
+                String first = s.substring(i, i + len);
+                char[] chFirst = first.toCharArray();
+                Arrays.sort(chFirst);
+                for (int j = i + 1; j <= s.length() - len; j++) {
+                    String second = s.substring(j, j + len);
+                    char[] chSecond = second.toCharArray();
+                    Arrays.sort(chSecond);
+
+                    if (Arrays.equals(chFirst, chSecond)) {
+                        result++;
+                    }
+                }
+            }
+        }
+        return result;
+    }
+
 
     static String twoStrings(String s1, String s2) {
         String result = "NO";
