@@ -5,7 +5,6 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -13,6 +12,62 @@ import java.util.stream.Stream;
 import static org.junit.jupiter.api.Assertions.*;
 
 class HackerRankTest {
+
+    @Test
+    void should_maximumToys_return_correct_answer() {
+        assertEquals(3, HackerRank.maximumToys(Arrays.stream("1 2 3 4".split(" ")).mapToInt(Integer::parseInt).toArray(), 7));
+        assertEquals(4, HackerRank.maximumToys(Arrays.stream("1 12 5 111 200 1000 10".split(" ")).mapToInt(Integer::parseInt).toArray(), 50));
+    }
+
+    @Test
+    void should_countSwap_return_correct_answer() {
+        //given
+
+        HackerRank.countSwaps(Arrays.stream("1 2 3".split(" ")).mapToInt(Integer::parseInt).toArray());
+        HackerRank.countSwaps(Arrays.stream("3 2 1".split(" ")).mapToInt(Integer::parseInt).toArray());
+    }
+
+    @Test
+    void should_freqQuery_return_correct_answer() {
+        //given
+        String t1 = "1 5\n" +
+                "1 6\n" +
+                "3 2\n" +
+                "1 10\n" +
+                "1 10\n" +
+                "1 6\n" +
+                "2 5\n" +
+                "3 2";
+
+        String t2 = "1 3\n" +
+                "2 3\n" +
+                "3 2\n" +
+                "1 4\n" +
+                "1 5\n" +
+                "1 5\n" +
+                "1 4\n" +
+                "3 2\n" +
+                "2 4\n" +
+                "3 2";
+        //when
+
+        //then
+        assertIterableEquals(Arrays.asList(0, 1), HackerRank.freqQuery(prepareList(t1)));
+        assertIterableEquals(Arrays.asList(0, 1, 1), HackerRank.freqQuery(prepareList(t2)));
+    }
+
+    private static List<int[]> prepareList(String text) {
+        List<String> list = Stream.of(text.split("\n")).collect(Collectors.toList());
+        List<int[]> test = new ArrayList<>();
+        for (String s : list) {
+            int[] t = new int[2];
+
+            t[0] = Integer.parseInt(s.substring(0, 1));
+            t[1] = Integer.parseInt(s.substring(2));
+            test.add(t);
+        }
+        return test;
+    }
 
     @org.junit.jupiter.api.Test
     void should_sockMerchant_return_more_then_zero() {
@@ -195,11 +250,12 @@ class HackerRankTest {
     private List<Long> tablica() {
         String arr = null;
         try {
-            arr = new String(Files.readAllBytes(Paths.get("C:\\Users\\michal.musial\\IdeaProjects\\HackerRank\\src\\test\\test.txt")));
+            arr = new String(Files.readAllBytes(Paths.get("D:\\Mik\\Java\\HackerRank\\src\\test\\test.txt")));
         } catch (IOException e) {
             e.printStackTrace();
         }
 
+        assert arr != null;
         return Stream.of(arr.split(" ")).map(Long::parseLong).collect(Collectors.toList());
     }
 }

@@ -1,6 +1,5 @@
 import java.util.*;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.stream.Collectors;
 
 import static org.apache.commons.lang3.ArrayUtils.indexOf;
@@ -10,44 +9,123 @@ public class HackerRank {
 
     }
 
+
+    static int maximumToys(int[] prices, int k) {
+        int maxToys = 0;
+        int sum = 0;
+        Arrays.sort(prices);
+        for (int price : prices) {
+            if (sum + price <= k) {
+                sum += price;
+                maxToys++;
+            } else break;
+        }
+        return maxToys;
+    }
+
+    // Bobble Sort
+    static void countSwaps(int[] a) {
+        int swapCounter = 0;
+        int temp;
+        boolean swapped;
+        for (int i = 0; i < a.length - 1; i++) {
+            swapped = false;
+            for (int j = 0; j < a.length - 1; j++) {
+                if (a[j] > a[j + 1]) {
+                    temp = a[j];
+                    a[j] = a[j + 1];
+                    a[j + 1] = temp;
+                    swapCounter++;
+                    swapped = true;
+                }
+            }
+            if (!swapped) {
+                break;
+            }
+        }
+        System.out.println("Array is sorted in " + swapCounter + " swaps.");
+        System.out.println("First Element: " + a[0]);
+        System.out.println("Last Element: " + a[a.length - 1]);
+    }
+
+    //Dictionaries and Hashmaps
+    ////////////////////////////////////////////////////////////////
+    static List<Integer> freqQuery(List<int[]> queries) {
+        List<Integer> result = new ArrayList<>();
+        Map<Integer, Integer> map = new HashMap<>();
+        for (int[] list : queries) {
+            int number = list[1];
+            switch (list[0]) {
+                case 1:
+                    if (map.containsKey(number)) {
+                        map.put(number, map.get(number) + 1);
+                    } else {
+                        map.put(number, 1);
+                    }
+                    break;
+                case 2:
+                    if (map.containsKey(number) && map.get(number) > 0) {
+                        map.put(number, map.get(number) - 1);
+                    }
+                    break;
+                case 3:
+                    if (map.containsValue(number)) {
+                        result.add(1);
+                    } else {
+                        result.add(0);
+                    }
+                    break;
+            }
+        }
+
+        return result;
+    }  // 11 nie przeszło - time out
+
     static long countTriplets(List<Long> arr, long r) {
         long result = 0;
 
-        Map<Long, Long> map = new HashMap<>();
+        Map<Long, Long> rMap = new HashMap<>();
 
         for (Long l : arr) {
-            if (map.containsKey(l)) {
-                map.replace(l, map.get(l) + 1L);
+            if (rMap.containsKey(l)) {
+                rMap.replace(l, rMap.get(l) + 1L);
             } else {
-                map.put(l, 1L);
+                rMap.put(l, 1L);
             }
         }
         if (r == 1) {
-            for (Long l : map.values()) {
+            for (Long l : rMap.values()) {
                 if ((l) >= 3) {
                     result += factorial(l, 3);
                 }
             }
         } else {
-//            Collections.sort(arr);
-//            long previous = 0;
-//            for (int i = 0; i < arr.size() - 2; i++) {
-//                long l = arr.get(i);
-//                if (l == previous) {
-//                    continue;
-//                } else {
-//                    previous = l;
-//                }
-            for (Long l : map.keySet()) {
-                long second = l * r;
-                if (map.containsKey(second)) {
-                    long third = second * r;
-                    if (map.containsKey(third)) {
-                        long f = map.get(l);
-                        long s = map.get(second);
-                        long t = map.get(third);
-                        result += f * s * t;
-                    }
+            Map<Long, Long> lMap = new HashMap<>();
+            for (long second : arr) {
+                long counterL = 0;
+                long counterR = 0;
+                long first = 0;
+                long third = second * r;
+                if (second % r == 0) {
+                    first = second / r;
+                }
+                long val = rMap.get(second);
+                rMap.put(second, val - 1);
+
+                if (rMap.containsKey(third)) {
+                    counterR = rMap.get(third);
+                }
+
+                if (lMap.containsKey(first)) {
+                    counterL = lMap.get(first);
+                }
+
+                result += counterR * counterL;
+
+                if (!lMap.containsKey(second)) {
+                    lMap.put(second, 1L);
+                } else {
+                    lMap.put(second, lMap.get(second) + 1L);
                 }
             }
         }
@@ -82,7 +160,7 @@ public class HackerRank {
                     char[] chSecond = second.toCharArray();
                     Arrays.sort(chSecond);
 
-                    if (Arrays.equals(chFirst, chSecond)) {
+                    if (chFirst.equals(chSecond)) {
                         result++;
                     }
                 }
